@@ -34,7 +34,7 @@
 > 3. `{OTHER_UPSTREAM_OR_NA}`
 >
 > **下游预期产物**：
-> - action-plan：`{ACTION_PLANS_TO_PRODUCE}`
+> - action-plan：`{ACTION_PLANS_TO_PRODUCE}`（逐 Phase 完整路径锚定见 §7.2 —— 强制）
 > - closure / handoff：`{CLOSURE_OR_HANDOFF_DOC}`
 > - **不产出 design 文档**（charter-lite 设计意图）。
 
@@ -188,7 +188,8 @@
 
 ### 4.2 各 Phase 精简说明
 
-> 每个 Phase 填 5 个字段即可(比完整 charter 少一个"风险"块 —— 风险已进 §4.1 表)。
+> 每个 Phase 填 6 个字段(含 action-plan 锚定)。比完整 charter 少一个"风险"块 —— 风险已进 §4.1 表。
+> **action-plan 锚定为强制项**：每个 Phase 必须在此写出其 action-plan 文件的**完整路径 + 文件名**(及对应 closure 路径),使 charter 读者无需进入下游目录即可定位执行文档。文件名统一以**阶段代号为前缀**。
 
 #### `{P0} — {PHASE_NAME}`
 
@@ -197,6 +198,7 @@
 - **交付物**：`{DELIVERABLES}`
 - **收口标准**：`{EXIT_CRITERIA}`
 - **什么不算完成**：`{NOT_DONE_CASES}`
+- **action-plan 锚**：`{ACTION_PLAN_PATH}` → closure：`{CLOSURE_PATH}`
 
 #### `{P1} — {PHASE_NAME}`
 
@@ -205,8 +207,9 @@
 - **交付物**：`{DELIVERABLES}`
 - **收口标准**：`{EXIT_CRITERIA}`
 - **什么不算完成**：`{NOT_DONE_CASES}`
+- **action-plan 锚**：`{ACTION_PLAN_PATH}` → closure：`{CLOSURE_PATH}`
 
-*（按需继续扩展;Phase 多于 4 个 ⇒ 考虑回退完整 charter）*
+*（按需继续扩展;Phase 多于 4 个 ⇒ 考虑回退完整 charter。一个 Phase 若拆为多个 sub-stage / band，每个 sub-stage 各自锚定一份 action-plan。）*
 
 ---
 
@@ -275,12 +278,22 @@
 
 1. `{NEXT_PHASE_PRECONDITION}`
 
-### 7.2 后续文档生产清单
+### 7.2 后续文档生产清单（强制锚定）
 
-- **action-plan**：`{ACTION_PLAN_LIST}`
-- **closure / handoff**：`{CLOSURE_DOC}`
+> **规则**：本节必须用**完整路径 + 文件名**锚定每个 Phase（含 sub-stage / band）的 action-plan 与 closure 文件。
+> charter-lite 不下钻到任务级,但必须让读者无需猜测就知道每个 Phase 的下游执行 / 收口文档落点。
+> action-plan / closure 文件名统一以**阶段代号为前缀**,与 §4 的 Phase 一一对应;一个 Phase 拆多个 sub-stage 时,每个 sub-stage 各占一行。
+
+| Phase / sub-stage | action-plan 文件（完整路径 + 文件名） | closure 文件（完整路径 + 文件名） |
+|-------------------|----------------------------------------|-------------------------------------|
+| `{P0}` | `{ACTION_PLAN_PATH}` | `{CLOSURE_PATH}` |
+| `{P1}` | `{ACTION_PLAN_PATH}` | `{CLOSURE_PATH}` |
+| `{PN}` | `{ACTION_PLAN_PATH}` | `{CLOSURE_PATH}` |
+
+- **action-plan 索引 README**：`{ACTION_PLAN_README_PATH}`
+- **阶段总 closure / handoff**：`{STAGE_CLOSURE_PATH}`
 - **不产出 design 文档**。
-- 建议撰写顺序：`{WRITE_ORDER}`
+- **建议撰写顺序**：`{WRITE_ORDER}`
 
 ---
 
