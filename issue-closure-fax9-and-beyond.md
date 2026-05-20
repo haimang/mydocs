@@ -70,8 +70,9 @@
 - `test/spike/journey-multi-model-text-return.spike.test.mjs` 对每个注册 model（FAX9 锁定的 gemma-4 + kimi-k2.6）至少 1 个 prompt 跑通
 - 每个 (model, prompt) 组合都得到 ≥ 5 chars 真实 text return
 - 任一 model 0 text 输出 → alert + block deploy (防 0515-0520 llama-4-scout silent regression)
+- **FAX9 closure-evening 2026-05-20 新增 sub-gate**: `test/spike/journey-fax9-curl-end-to-end.spike.test.mjs` 用 kimi-k2.6 验证 **tool-use end-to-end** 链路 — confirmation tool_input 完整 + tool.call.result 200 OK + 真实 HTTP fetch return；防 workers-ai parser 嵌套 `choices[0].delta.tool_calls` 漏读 / streaming args 碎片不累积 silent-drop (RX-30/RX-31)
 
-**判定**: ✅ PASS / ⚠ PARTIAL（部分 model 跑通）/ ❌ FAIL
+**判定**: ✅ PASS / ⚠ PARTIAL（部分 model 跑通 OR tool-use sub-gate pending owner-tier auth）/ ❌ FAIL
 
 ### G-F — Owner-Test Gate ②
 
