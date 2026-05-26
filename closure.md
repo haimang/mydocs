@@ -20,16 +20,24 @@
 ────────────────────────────────────────────────────────────────────────────
 【第 2 步】填写纪律（这是 closure 与「自我表扬」的区别）
 ────────────────────────────────────────────────────────────────────────────
-  1. close-type 必须三选一，且与 §0 verdict 一致：
-       · full-close                      —— 本阶段 scope 全部 verified，无 known-issue
-       · close-with-known-issues         —— 收口但有显式 known gap / partial proof
-       · closed-with-explicit-deferrals  —— 收口但有承诺被显式推迟到下游（带 owner/trigger）
+  1. close-type 必须使用统一 taxonomy，且与 §0 verdict 一致：
+       · full-close                                      —— 本阶段 scope 全部 verified，无 known-issue / deferred / pending gate
+       · closed-with-explicit-deferrals                  —— 代码/文档 scope done，但有显式推迟到下游的承诺（带 owner/trigger）
+       · close-with-known-issues                         —— 可收口，但仍有显式 known gap / partial proof / bounded debt
+       · implementation-complete-awaiting-live-verification —— 代码实现完成，但 charter hard gates 仍需 live / D1 / owner-test 验证
+     旧 closure 可保留历史用语；新 closure 必须从上述 4 类选择，不再混用 freeform close 语义。
   2. 每个 ✅ 必须归类为「诚实收口 5 态」之一（见 §5），不允许无归类的 ✅：
        · verified              —— commit + D1 query/test + spike name + run-time 四元组齐全
        · observed-OK-at-closure—— 收口时刻 snapshot 正常，但未做 long-run soak（dev 阶段允许）
        · partial               —— A 级证据不全；必须列出缺什么 + handoff 给谁
        · 未观察                 —— 收口时刻无法主动 reproduce（long-outage / multi-tab race 等）
        · deferred              —— carry-over 到后续 phase；必须列出承接位置
+     价值台账推荐 5 级证据标注：
+       · ✅ live-verified      —— live / D1 / owner-test 等目标证据已完成
+       · 🟢 short-verified     —— 本地 short/unit/type/docs gates 已完成，但不宣称 live
+       · 🟡 partial            —— 仅完成一部分或证据不足
+       · ⏸ live-pending        —— 代码存在，但 live/D1/owner gate 未跑或未闭
+       · ❌ missing            —— 计划内能力未实现
   3. ✅ 的证据用四元组，不允许仅 file:line：
        (commit `abc1234` + query/test `SELECT … / foo.spike.test.mjs` + run-time `2026-MM-DD HH:MM UTC`)
   4. deferred 必须分三类：A=charter 未承诺(OOS) / B=本阶段主动 defer / C=handoff 给下游。
@@ -42,7 +50,7 @@
   □ 所有 `<!-- … -->` 注释删除（它们只给你看，不进产物）
   □ 所有 `{TOKEN}` 占位替换为真实内容（grep `{` 应只剩正文里的代码花括号）
   □ 不适用本档次的整节已删除
-  □ §0 verdict 的 close-type 与 frontmatter 的 close-type 字面一致
+  □ §0 verdict 的 close-type 与 frontmatter 的 close-type 字面一致，且属于统一 taxonomy
   □ 每个 ✅ 都能在 §5 找到 5 态归类
 
   存放位置：docs/issue/{phase-cluster}/{phase-id}-closure.md
@@ -56,8 +64,8 @@
 
 > 阶段: `{CHARTER}/{PHASE_ID} — {PHASE_NAME}`
 > 范围: `{SCOPE}` <!-- 例: 单 work-item / P1–P6 / charter 全 phase 合拢 -->
-> Close-type: `full-close | close-with-known-issues | closed-with-explicit-deferrals` <!-- 三选一，删除其余两个 -->
-> 状态: `closed | close-with-known-issues`
+> Close-type: `full-close | closed-with-explicit-deferrals | close-with-known-issues | implementation-complete-awaiting-live-verification` <!-- 四选一，删除其余三个 -->
+> 状态: `closed | close-with-known-issues | implementation-complete-awaiting-live-verification`
 > 日期: `{DATE}` · 作者: `{AUTHOR}`
 > 关联 charter: `{CHARTER_PATH}`
 > 关联 design: `{DESIGN_PATH_OR_NA}` <!-- charter-lite 阶段无 design 写 N/A -->

@@ -26,6 +26,8 @@
 | R1 | `{ISSUE}` | `fixed | partially-fixed | rejected | stale-rejected | deferred-with-rationale | blocked` | `{HOW}` | `{FILES}` |
 | R2 | `{ISSUE}` | `fixed | partially-fixed | rejected | stale-rejected | deferred-with-rationale | blocked` | `{HOW}` | `{FILES}` |
 
+> 多轮 review 场景必须补充「独立复核状态」：`self-claimed-only | independently-verified | stale-rejected-by-code | deferred-by-owner/charter`。不要让 `fixed` 只停留在实现者自评。
+
 ### 6.3 Blocker / Follow-up 状态汇总
 
 | 分类 | 数量 | 编号 | 说明 |
