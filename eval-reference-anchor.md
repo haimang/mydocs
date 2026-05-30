@@ -7,7 +7,7 @@
 > **何时不用**：① 找我方缺口 → 用 `eval-gap-study.md`；② 做设计决策 → 用 `design.md`（本文只喂 design，不替代）；③ 穷尽分析外部 CLI → 用 `investigation.md`。
 >
 > **使用纪律（共有脊 · 所有 eval 模板一致）**：
-> 1. 本文是 **eval / reference-anchor**，**冻结零决策**——只产出"借鉴台账 + substrate 过滤"，喂给 design。
+> 1. 本文是 **eval**，**冻结零决策**——只产出"借鉴台账 + substrate 过滤"，喂给 design。
 > 2. **机制 ≠ 思路**：每个借鉴点都必须过 §5 的技术路线（TR）过滤；凡与 nano-agent 路线冲突的机制，标降级/重映射，不得直抄。
 > 3. 头部 / 性质声明 / TL;DR（此处为"如何读"）/ 输入锚定 / 修订历史为**共有脊**，跨 eval 模板一致。
 
@@ -19,7 +19,7 @@
 > **日期**：`{DATE}`
 > **作者**：`{AUTHOR}`（panel / sub-agents：`{PANEL_OR_NONE}`）
 > **文档性质**：`eval / reference-anchor`（provisional；冻结零决策，喂 design）
-> **文档状态**：`draft | reviewed | superseded`
+> **文档状态**：`draft | reviewed | frozen | superseded`（基线/锚型 eval，会冻结借鉴裁定）
 > **上游权威输入**：
 > - `{INITIAL_PLANNING_DOC}`
 > **下游消费者**：`{DESIGN_DOCS_THIS_FEEDS}` → 之后 `{PRE_CHARTER_QNA}`

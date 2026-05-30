@@ -23,7 +23,7 @@
 
 > 用一到三段话说明：为什么现在要执行这份计划、它从哪些 frozen design / QNA / closure 继承输入、它要把哪些设计结论落成可交付物。
 >
-> **纪律**：如果仍有 owner / architect 需要回答的问题，不应在 action-plan 中开 Q/A；应回到 design / QNA register 完成冻结。本文件只消费已冻结结论。
+> **纪律**：如果仍有 owner / architect 需要回答的问题，不应在 action-plan 中开 Q/A；应回到 design / qna register 完成冻结。本文件只消费已冻结结论。
 
 - **服务业务簇**：`{SERVICE_CLUSTER_NAME}`
 - **计划对象**：`{PLAN_OBJECT}`

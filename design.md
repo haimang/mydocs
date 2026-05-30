@@ -15,7 +15,7 @@
 
 > 说明为什么现在讨论这个功能簇、它继承了哪些已经冻结的 charter / QNA / closure 结论，以及本设计不再讨论什么。
 >
-> **纪律**：设计阶段负责回答 owner / architect 级问题。会影响 contract、boundary、scope、runtime posture、security law 的问题必须在本设计或关联 QNA register 中冻结；不要把这类问题留给 action-plan。
+> **纪律**：设计阶段负责回答 owner / architect 级问题。会影响 contract、boundary、scope、runtime posture、security law 的问题必须在本设计或关联 qna register 中冻结；不要把这类问题留给 action-plan。
 
 - **项目定位回顾**：`{PROJECT_POSITIONING}`
 - **本次讨论的前置共识**：
@@ -288,7 +288,7 @@
 1. `{DESIGN_EXIT_CRITERION_1}`
 2. `{DESIGN_EXIT_CRITERION_2}`
 3. `{DESIGN_EXIT_CRITERION_3}`
-4. 所有影响 action-plan 执行路径的问题都已在本设计或 QNA register 中回答。
+4. 所有影响 action-plan 执行路径的问题都已在本设计或 qna register 中回答。
 
 ### 9.3 下一步行动
 
@@ -296,7 +296,7 @@
   - `{ACTION_PLAN_DOC}`
 - **需要同步更新的设计文档**：
   - `{RELATED_DESIGN_DOC}`
-- **需要进入 QNA register 的问题**：
+- **需要进入 qna register 的问题**：
   - `{QNA_ITEM_OR_NONE}`
 
 ---

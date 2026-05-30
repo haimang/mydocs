@@ -3,7 +3,7 @@
 > 批次: `{BATCH_ID}`（例 `0524-batch-01`）
 > 调查时间: `{DATE}`
 > 调查者: `{ANALYST}`（例 `Opus 4.7`）
-> 文档状态: `draft | reviewed | superseded-by-charter`
+> 文档状态: `draft | reviewed | superseded`
 > 部署基线: `后端 6-worker + 前端 clients/web 于 commit {SHA}（{ENV}，{FRONTEND_URL} + {BACKEND_URL}，health {N}/6 live、seams unset）`
 >
 > 截图对象（`.tmp/bug-report/{BATCH_ID}/`）:

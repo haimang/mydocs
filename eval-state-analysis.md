@@ -6,7 +6,7 @@
 > **何时不用**：① 给制品下收口结论 → 用 `closure.md`；② 复盘一次决策失误 → 用 `eval-retrospective.md`；③ 提案新阶段范围 → 用 `eval-general-purpose.md`。
 >
 > **使用纪律（共有脊 · 所有 eval 模板一致）**：
-> 1. 本文是 **eval / state-analysis**，**不是 closure、不是 verdict、不是 charter**。它给现状一份冷静快照 + 前瞻交接，不替代收口或纲领。
+> 1. 本文是 **eval**，**不是 closure、不是 verdict、不是 charter**。它给现状一份冷静快照 + 前瞻交接，不替代收口或纲领。
 > 2. **对账诚实红线（本 flavor 灵魂）**：必须把*声称*的价值与*真实*代码对账——`frozen ≠ done`、over/under-claim、占位/假零都要点名；每条 deferred 项必须带 **reopen 触发器**，不得静默吞掉。
 > 3. 头部 / 性质声明 / TL;DR / 输入锚定 / 修订历史为**共有脊**，跨 eval 模板一致。
 
