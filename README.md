@@ -44,7 +44,7 @@
 
 **轨道/design 选择**:见 `re-design/workflow-tracks.md` §4 决策树 + 本文 §4.6 的 design-necessity 6 条。
 
-### 1.3 家族索引(active 22)
+### 1.3 家族索引(active 23)
 
 | 家族 | 模板 | 一句话角色 |
 |------|------|------------|
@@ -66,7 +66,8 @@
 | | `respond-execution-log` | 执行日志回填(append action-plan §9)|
 | | `respond-post-freeze` | 冻结后补强(append design/eval 续号)|
 | | `respond-verification` | 代码碰撞核实矩阵(append 附录)|
-| **review / closure / 专科(4)** | `code-review` | 评审制品 + verdict |
+| **review / closure / 专科(5)** | `code-review` | 评审制品 + verdict(单 reviewer)|
+| | `review-findings-ledger` | 跨 reviewer 合并 + verified-findings + 初步修复方案(实现者建,独立 track)|
 | | `closure` | 收口 + 价值/负债台账 + handoff |
 | | `api-compliance` | API 合规审查 |
 | | `bug-analysis-report` | bug 根因分析 |
@@ -288,7 +289,7 @@
 | 10 收口(DoD = 测试台账全 PASS 映射)| 收口硬闸 + 收口映射表(收口目标↔Test-ID↔证据)+ closure 五态 | 必填 |
 | 11 执行日志回填(仅 executed)| 薄占位;详细回填改用 `respond-execution-log` | executed 后 |
 
-### 2.6 review / closure / 专科(4)
+### 2.6 review / closure / 专科(5)
 
 #### `code-review`(评审制品 + verdict)
 - **何时用**:评审 design/action-plan/code/docs/closure。**状态**:`reviewed|changes-requested|re-reviewed|closed`。
@@ -301,6 +302,20 @@
 | 3 In-Scope 逐项对齐审核 | 是否满足 design/AP 收口标准 | 必填 |
 | 4 Out-of-Scope 核查 | 防越界 + 防把 deferred 误判 blocker | 必填 |
 | 5 最终 verdict 与收口意见 | 收口意见 | 必填 |
+
+#### `review-findings-ledger`(跨 reviewer 合并 + verified-findings + 初步修复方案)
+- **何时用**:收齐 **≥2 份** 独立 reviewer 审查制品后,由**实现者/合并人**平铺、合并去重、逐条对当前真实代码独立复核,形成单一权威台账 + 初步修复方案。**取代**「把统一台账 append 在某位 reviewer 审查文件底部」的旧做法,改为**独立文件 track**(一标的一轮 = 一份)。**何时不用**:单 reviewer 评审→`code-review`;只对单份审查逐项回应→`code-review-respond`。**状态**:`triaged|fixing|resolved|closed`。**核查纪律**:reviewer 结论仅作线索,每条 `valid` 由实现者亲自 grep/Read 坐实(带 file:line),与任一方(含本人自审初稿)冲突以实测为准;净增盲区与误报均显式登记。**三类归属(问责轴)**:每条 valid 缺口强制三选一——`[true-bug]`(本阶段引入 or 计划内该修却漏修=欠账,必修 or 升 blocker)/ `[partial-delivery]`(已规划已动手但没做完,补齐 + 剩余切片登记承接)/ `[true-deferred]`(本阶段从未承诺,合法后延);内置反规避诚实闸(true-bug 禁伪装成 deferred)。
+
+| 模块 | 用途 / 承担的责任 | 填写时机 |
+|------|-------------------|----------|
+| 元信息(置顶)| 审查标的 / 轮次 / 合并人 / 状态 / **审查来源锚定(逐份列全)** / 对照真相 | 必填 |
+| 0 合并方法与核查纪律 | 合并范围 + 4 条硬纪律 + verdict/处置/严重/**三类归属** 四类图例(含决策树 + 诚实闸)| 必填 |
+| 1 一句话裁定 + 合并统计 | TL;DR:统一 finding 数 / 各 verdict·**三类归属**·处置计数 / blocker / 净增盲区 | 必填 |
+| 2 合并映射 | reviewer 原编号 → 统一 `V#`(窄表 + 可选 5 方宽 cross-tab)| 必填 |
+| 3 verified-findings 台账 ★ | `V#|标题|严重(最严)|来源|复核判定|归属类|证据(file:line)|处置` + 簇子表 | 必填 |
+| 4 复核汇总 + self-correction | **§4.1-A 三类归属分桶(★问责主视图)** + 处置分桶 + 净增承重盲区(vs 自审初稿)+ 带证据驳回误报 | 必填(同体时 §4.2 必填)|
+| 5 初步修复方案 ★ | 策略(三类→义务映射)+ 逐项修复计划(目标文件/falsifiable/migration·owner/批次)+ §5.4 承接(true-deferred + partial 剩余切片,带 reopen 触发器)| 必填 |
+| 6 处置执行回填(append-only)| fixes 落地后按 `code-review-respond` 纪律逐项回填 + 验证 + **三类对账诚实闸** + 残留 | fixing 后 |
 
 #### `closure`(收口 + 价值/负债台账 + handoff)
 - **何时用**:阶段/子阶段完成收口。**先选档**:子阶段(§0–5)/ 阶段 final(§0–7)/ grand(§0–9)。**纪律**:close-type 4 类 + 诚实收口 5 态 + ✅ 用四元组证据(commit+query/test+run-time)。
@@ -504,3 +519,5 @@
 | v0.1 | 2026-05-30 | Opus 4.8 | 初稿:active 22 模板索引 + 四轨速查 + canonical 统一约定 + legacy 说明 |
 | v0.2 | 2026-05-31 | Opus 4.8 | **完整重写为可操作索引**:新增 §0 使用指南、§1 选择决策树、**§2 逐模板模块分解表(模块·责任·填写时机 + 何时用/何时不用 + 谁写·何时)**、**§3 模块重组指南(原则 + 3 真实先例 + 高复用模块目录)**;canonical 约定保留并补 respond banner;legacy 校正 |
 | v0.3 | 2026-05-31 | Opus 4.8 | 同步 `action-plan` v2:§2.5 模块表更新为 11 段(新增 §7 内置 reference-anchor 锚区、§8 测试台账、§10 收口=台账全 PASS 映射、§11→respond-execution-log;§3 升为不可约三元组);依据 `re-design/action-plan-new-version-proposal.md` v0.2 |
+| v0.4 | 2026-06-11 | Opus 4.8 | 新增 `review-findings-ledger`(active 22→23;review/closure 专科 4→5):把过去 append 在 reviewer 审查文件底部的「跨 reviewer 合并 + verified-findings 台账」抽成独立模板,由实现者建,独立 track;§1.3 家族索引 + §2.6 模块表同步;依据先例 `clients/web/docs/code-review/web-v90/{RWX20-RWX22,RWX12-RWX14,RWX15-*-pass}-reviewed-by-opus.md` 的 §6/§A 台账 |
+| v0.5 | 2026-06-11 | Opus 4.8 | `review-findings-ledger` 加**三类归属问责轴**(与 verdict/disposition 正交):`[true-bug]`(本阶段引入 or 计划内该修却漏修)/ `[partial-delivery]`(已规划已动手但没做完)/ `[true-deferred]`(本阶段从未承诺,合法后延);新增 §0.4 图例(精确含义 + 决策树 + 反规避诚实闸)、§3.1 `归属类`列、§1/§4.1-A 三类计数与分桶主视图、§5 三类→义务映射、§6.2 三类对账闸;§2.6 模块表同步 |
