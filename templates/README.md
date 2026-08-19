@@ -24,6 +24,7 @@
 ```text
 你要产出什么?
 ├─ 还在"想做什么/怎么拆/可行吗/对照缺什么" ───▶ eval 家族(§2.1)
+├─ 一次正式 lane RED 的取证·归因·path-cap 限缩修复 ─▶ eval-attribution-and-fix-cycle(§2.1)
 ├─ 进 planning 前的「前置研究评估」(借鉴/缺口/契约草案) ▶ assessment 簇·design-prelude(§2.5)
 ├─ 摸清「已有系统真值层/哪些真能用/哪些假绿」 ─▶ truth/ 子簇·truth-grounding(§2.6)
 ├─ 多章节子阶段·要派 ≥2 份 action-plan 的策划链 ─▶ planning 三态(§2.2)
@@ -31,7 +32,7 @@
 ├─ 写"完工长什么样 + 净新契约 + 跨功能一致性" ─▶ design(§2.4)
 ├─ 排"怎么做/何序/怎么测/怎么收口" ───────────▶ action-plan(§2.4)
 ├─ 评审 / 跨 reviewer 合并 / 回应 / 收口 ───────▶ review·closure·respond(§2.7/2.8)
-└─ API 合规 / bug 根因 / 项目 README 专科 ──────▶ report/(§2.9)
+└─ API 合规 / owner-test 截图批次根因 / 项目 README ──▶ report/(§2.9)
 ```
 
 ### 1.2 主流水线（近期实践 · grounding-truth 范式）
@@ -55,18 +56,27 @@ eval(想做什么) ─┐
 ```
 
 - **轻量变体**：trivial 无契约 → `eval-general-purpose → action-plan`；决策少 → `qna-singular` 一次冻结即可，不必走三态。
+- **事故闭环变体**（owner-gate / 正式 lane first-red，对标 OG-08 X/Y 包）：
+  ```text
+  封存 RED ──▶ eval-attribution-and-fix-cycle
+      │  cap 内且无需新 Q：owner 授权后就地执行（§14 append code-execution-log）
+      ├─ 需新决策 ──────────────▶ qna
+      ├─ 撑破 cap / 要拆 ≥2 AP ──▶ planning-final → action-plan
+      └─ 实现对照 ──────────────▶ code-review；阶段关账仍走 closure
+  ```
 - **charter 已退役**：旧"重轨 charter / 轻轨 charter-lite"的「定边界 + 冻决策」角色，现由 **planning 三态（scope/phase/exit）+ qna 双门（决策冻结）** 共同承担（§5）。历史四轨设计见 `propositions/workflow-tracks.md`。
 
-### 1.3 家族索引（active 26）
+### 1.3 家族索引（active 27）
 
 | 家族 / 簇 | 模板 | 一句话角色 |
 |------|------|------------|
-| **eval(6)** | `eval-general-purpose` | 提案"做什么"（兜底骨架）|
+| **eval(7)** | `eval-general-purpose` | 提案"做什么"（兜底骨架）|
 | | `eval-gap-study` | 我方缺口台账（对照参考找缺什么）|
 | | `eval-state-analysis` | 交付快照 + 对账诚实 + 前瞻交接（周期铰链）|
 | | `eval-reference-anchor` | grounding 借鉴锚台账（verdict + substrate-fit/TR 过滤）|
 | | `eval-feasibility-study` | go/no-go 探针（token 化结论）|
 | | `eval-retrospective` | 失误复盘（时间线 + 根因 + 教训）|
+| | `eval-attribution-and-fix-cycle` | 封存 lane RED 的取证·归因·限缩修复闭环（事故宿主）|
 | **planning 簇(3)** | `planning-initial` | 站①：整合裁定原始 eval + 真相台账（foundational T-O / 暂定 T-P）|
 | | `planning-proposed` | 站②：Δ 重锚 + reference-checked 真相（T-R）+ 调整溯因 |
 | | `planning-final` | 站③：critique + 全态真相台账 + **每 AP 锁 4 台账** + 派生排序 |
@@ -94,7 +104,7 @@ eval(想做什么) ─┐
 
 > 每份：**一句话功能/价值 · 何时用 / 何时不用 · 承重模块（★=灵魂）**。
 
-### 2.1 eval 家族（6）—— 共有脊：本文是 eval，**冻结零决策**；需 owner 拍板者列 OPEN 或回 qna。状态：纯分析 `draft|reviewed|superseded`；锚型 `+frozen`。
+### 2.1 eval 家族（7）—— 共有脊：本文是 eval，**冻结零决策**；需 owner 拍板者列 OPEN 或回 qna。状态：纯分析 `draft|reviewed|superseded`；锚型 `+frozen`。**例外**：`eval-attribution-and-fix-cycle` 是事故闭环宿主——归因段仍零决策，修复设计待 owner 单独授权，执行只 append；事故状态见 §4.1。
 
 - **`eval-general-purpose`** — charter/planning 前开放式提案"装什么、怎么拆相位"，也是不归其它 flavor 的**默认兜底**。★ §2 In/Out-Scope（提案边界）· §4 逐簇工作台账 · §6 Owner 决策门。**何时不用**：写验收→design；排序→action-plan；对照找缺口→gap-study。
 - **`eval-gap-study`** — 以参考实现为标尺，研究我方某子系统缺什么、该建什么。★ §3 缺口/断点台账。**何时不用**：穷尽外部 CLI 本身（已退役 investigation）；提案整阶段→general-purpose；go/no-go→feasibility。
@@ -102,6 +112,7 @@ eval(想做什么) ─┐
 - **`eval-reference-anchor`** — design 前把每个可借鉴点钉到 `path:line`/URL，给 verdict，并用 substrate-fit/TR 过滤**防"思路误抄成机制"**。★ §5 Substrate-fit/TR 过滤复核。图例：借鉴 verdict `✅借/🔶部分借/⛔反例/🆕净新`。可 frozen。
 - **`eval-feasibility-study`** — charter/design 前对**单个关键决策**做 go/no-go 探针。★ §0 Verdict · §3 方法·试了什么（诚实段）· §5.2 残余风险硬前置。
 - **`eval-retrospective`** — 把一次走错的弯路固化成"学习化石"。★ §2 根因表（追到机制/认知层）。**何时不用**：回看代码现状→state-analysis；评审制品→code-review。
+- **`eval-attribution-and-fix-cycle`** — 对**已封存正式 lane RED**做取证 + 分平面归因 + 上代分母评价 + **path-cap 限缩修复**；owner 授权后就地执行。★ §0.2 分平面 verdict（正式/产品/provider/机制禁止混写）· §3 因果链 + 阶段门（`GO_DESIGN / HOLD_EVIDENCE / NEED_QNA / ESCALATE_PLAN`）· §6 allowlist 硬上限 · §7 RED-first falsifier · §8 台账状态合同 · 主体 §0～§11 授权后只读，§14 append `code-execution-log`。档 A 单 lane / 档 B 双臂或多源 / 档 C 手术刀补证。**何时不用**：无封存 lane 的截图批次→`report/bug-analysis`；周期水位→`eval-state-analysis`；撑破 cap 或 ≥2 AP→`planning-final`；阶段收口→`closure`。
 
 ### 2.2 planning 簇（3）★ —— 三态成熟链：`planning-initial → planning-proposed → planning-final`，逐级 supersede 不回改前序。取代旧 `eval-planning`。
 
@@ -146,12 +157,12 @@ eval(想做什么) ─┐
 ### 2.8 respond / 附加章节（2）—— **不是独立文档，append 到宿主**。强制 banner：宿主/挂载位/append-only/作者·时机/回链 item-ID/多轮。
 
 - **`code-review-respond`** — 实现者修复后逐项回应（append code-review §6）。★ 6.2 逐项回应表（R-ID × `fixed|deferred|rejected`）· 6.5 验证结果 · 6.7 Ready-for-rereview gate。**append-only**，不改写 §0-§5。
-- **`code-execution-log`** — action-plan `executed` 后回填执行日志（append §9 厚版）。★ 9.1 逐工作项状态（回链台账 ID）· 9.5 pre-existing 失败带 git 证据甩锅。纪律：计划 vs 实际逐条偏差；residual 交后继不回填本阶段。
+- **`code-execution-log`** — 执行日志回填（append-only 厚版）。宿主二选一：`action-plan` → 挂 §9；`eval-attribution-and-fix-cycle` → 挂 §14。★ 逐工作项状态（回链台账 ID）· pre-existing 失败带 git 证据甩锅。纪律：计划 vs 实际逐条偏差；residual 交后继不回填本阶段；**不改写宿主分析/计划主体**。
 
 ### 2.9 report/ 专科（2）+ project-README（1）
 
 - **`report/api-compliance`** — 对照 frozen contract / qna 审 API surface 合规（NACP）。★ §4 跨簇 NACP 合规（Authority 翻译 / Trace UUID / Error Code 字典 / Tenant 边界 / Envelope Drift Gate）。
-- **`report/bug-analysis`** — owner-test 回来后、写 charter/action-plan **之前**的根因诊断。★ §6 架构判定(hot-fix vs 长治) · §7 完整 DAG 修复结构 · §8 测试体系归责 · §10 修复后测试方案 · 附录 Z 长期原则。
+- **`report/bug-analysis`** — owner-test 回来后、写 charter/action-plan **之前**的根因诊断（截图批次，**无**封存 lane root）。★ §6 架构判定(hot-fix vs 长治) · §7 完整 DAG 修复结构 · §8 测试体系归责 · §10 修复后测试方案 · 附录 Z 长期原则。**何时不用**：已有正式 journey / owner-gate 封存 RED → `eval-attribution-and-fix-cycle`。
 - **`eval-README`** — 给一个仓库产出/重写**对外**顶层 `README.md`（onboarding/巡检/交接）；借 eval 对账诚实但产出是交付物。档位 A/B/C（整库 / 子项目 / 单目录极简）。
 
 ---
@@ -177,6 +188,8 @@ eval(想做什么) ─┐
 | TL;DR / Verdict 结论先行 | 所有 eval / code-review §0 / closure §0 | 任何分析的开头一句话裁定 |
 | Tradeoff 辩证（选 X 不选 Y / 代价 / 重评）| `design` | 任何有争议取舍 |
 | 对账诚实（声称 vs 代码 / frozen≠done）| `eval-state-analysis §3` | 防文档剧场 |
+| 分平面 verdict + machine RED 不可倒写 | `eval-attribution-and-fix-cycle §0.2 / §3` | 正式/产品/provider/机制分行；防假绿 |
+| path-cap allowlist + RED-first falsifier | `eval-attribution-and-fix-cycle §6 / §7` | 事故修复包的范围硬闸与先红后绿 |
 | 根因表（追到机制/认知层）| `eval-retrospective §2` | 复盘失误为什么发生 |
 | substrate-fit / TR 过滤 | `eval-reference-anchor §5` / `assessment-analysis §7` | 把外部机制按本仓技术路线降级 |
 | 验收格栅（F→收口目标→Test-ID）| `design` / `assessment-analysis §9` / `action-plan §8` | 可验证完工标准 |
@@ -194,6 +207,7 @@ eval(想做什么) ─┐
 - **核心四态（共用）**：`draft → reviewed → frozen → superseded`。
 - **家族扩展**：`action-plan` + `executing|executed`；`code-review/api-compliance/*-respond` 用 `reviewed|changes-requested|re-reviewed|closed`；`code-review-findings-ledger` 用 `triaged|fixing|resolved|closed`。
 - **eval 纯分析型**（general-purpose/gap-study/state-analysis/feasibility/retrospective）：`draft|reviewed|superseded`（快照不 freeze）；锚型（reference-anchor / planning-final）：`+frozen`。
+- **`eval-attribution-and-fix-cycle` 事故状态**（与核心四态并用，写在头部「事故状态」串）：`ANALYSIS_COMPLETE → SCOPE_FROZEN → ADVERSARIALLY_REVIEWED → AUTHORIZED_FOR_LOCAL → EXECUTED_THROUGH_PREFLIGHT → NEXT_LANE_READY_NOT_STARTED`。正式 lane 的 machine RED **不随**这些状态改写。`frozen` 在此只锁设计/allowlist 给执行者，**不是** owner 授权编码。
 - **truth/ 子簇**：per-domain `draft|cross-reviewed|attested|superseded`；index `active campaign|closed`；per-cluster `draft rollup|reviewed|frozen`。
 - **澄清**：`frozen`（文档定稿锁定）≠ planning/eval 的"冻结零决策"（指不替 owner 拍板）。
 
@@ -266,3 +280,4 @@ eval(想做什么) ─┐
 | v0.2 | 2026-05-31 | Opus 4.8 | 完整重写为可操作索引（§0 指南 + §1 决策树 + §2 模块分解 + §3 重组指南 + §4 canonical）|
 | v0.3-0.5 | 2026-06-11 | Opus 4.8 | 同步 action-plan v2 / 新增 review-findings-ledger + 三类归属问责轴 |
 | **v0.6** | **2026-06-24** | **Opus 4.8** | **完整重写以反映模板体系重构**：① charter 家族退役、`eval-planning→planning 簇(3)`、`qna→qna 簇(2)`；② 新增 `assessment 簇·design-prelude(2)` 与 `truth/ 子簇·truth-grounding(3)`、`report/ 专科(2)`、`eval-README`；③ design 家族收敛为 `design`、`review-findings-ledger→code-review-findings-ledger`、`respond-execution-log→code-execution-log`、respond-post-freeze/verification 退役；④ 新增 §4.2 真相 ID 命名空间（qna `T-O` ↔ planning §2 互锁）、§4.4 truth-grounding 判据、§4.6 qna 角色/模式；⑤ §1.2 主流水线据 grounding-truth 实践重写、§5 legacy→retired。active 23→26 |
+| **v0.7** | **2026-08-19** | **Grok 4.6** | 新增 `eval-attribution-and-fix-cycle`（OG-08 X/Y 事故闭环：取证·归因·path-cap 修复·append 执行）。决策树/主流水线补事故轨；eval 6→7；`code-execution-log` 宿主扩到本模板 §14；§4.1 增事故状态词。active 26→27 |

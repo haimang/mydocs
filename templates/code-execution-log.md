@@ -1,12 +1,16 @@
-## 9. 执行日志回填（仅 `executed` 状态使用）
+## 9. 执行日志回填（仅宿主已进入可执行态时使用）
 
 > **用法（respond- 附加章节，append-only）**：
-> 1. **宿主**：`action-plan`。本节是 `action-plan.md` §9 的**厚版**；薄占位仍保留在 `action-plan.md §9`，需要详细回填时改用本模板。
-> 2. **挂载位置**：append 到 action-plan 主体 §8 之后，作 `## 9`。**不改写 §0–§8 计划主体**，只回填实际发生了什么。
-> 3. **谁写 / 何时**：由**执行者本人**在 plan 进入 `executed` 后回填（通常同会话）；文档状态不是 `executed` 时本节可省略。
-> 4. **回链 item-ID**：每一行必须对应计划台账 ID（`P1-01 / X3-01 / F1-06`），不许模糊写"做了一些"。
-> 5. **诚实纪律**：计划 vs 实际**偏差必须逐条**；测试 `degraded` 必带机器 `reason`；**pre-existing 失败须带 git 证据甩锅**，不写 success-shaped fallback；residual 交后继 charter，**不回填本阶段**。
-> 6. **多轮**：多步/多轮用 §9.3 时序表或 `Round 1/2/3`；版本 bump 落在产物 baseline，不在标题后缀。
+> 1. **宿主**（二选一，不得独立成篇）：
+>    - `action-plan`：本节是 `action-plan.md` 执行回填的**厚版**（薄占位在 AP §11；历史文档或称 §9）。
+>    - `eval-attribution-and-fix-cycle`：挂该模板 **§14**（事故包授权后的执行账）。
+> 2. **挂载位置**：
+>    - AP：append 到计划主体之后，作 `## 9` / `## 11`（以宿主现行编号为准）。**不改写计划主体**。
+>    - 事故闭环：append 为 `## 14`。**不改写 §0–§11 归因与设计原貌**。
+> 3. **谁写 / 何时**：由**执行者本人**在宿主进入可执行态后回填——AP 为 `executed`；事故闭环为 `AUTHORIZED_FOR_LOCAL` 起。未到该态则本节省略/删除。
+> 4. **回链 item-ID**：每一行必须对应计划/包台账 ID（`P1-01 / X3-01 / Y10-P0-01`），不许模糊写"做了一些"。
+> 5. **诚实纪律**：计划 vs 实际**偏差必须逐条**；测试 `degraded` 必带机器 `reason`；**pre-existing 失败须带 git 证据甩锅**，不写 success-shaped fallback；residual 交后继 charter / 后继包，**不回填本阶段**。事故闭环另：local PASS 不得自动授权下一 lane。
+> 6. **多轮**：多步/多轮用时序表或 `Round 1/2/3` / `§14.B`；版本 bump 落在产物 baseline，不在标题后缀。
 
 > 执行者：`{EXECUTOR}`
 > 执行时间：`{DATE}`
