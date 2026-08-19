@@ -66,7 +66,7 @@ eval(想做什么) ─┐
   ```
 - **charter 已退役**：旧"重轨 charter / 轻轨 charter-lite"的「定边界 + 冻决策」角色，现由 **planning 三态（scope/phase/exit）+ qna 双门（决策冻结）** 共同承担（§5）。历史四轨设计见 `propositions/workflow-tracks.md`。
 
-### 1.3 家族索引（active 27）
+### 1.3 家族索引（active 28）
 
 | 家族 / 簇 | 模板 | 一句话角色 |
 |------|------|------------|
@@ -89,8 +89,9 @@ eval(想做什么) ─┐
 | **truth/ 子簇 · truth-grounding(3)** | `truth/assessment-index` | 真值奠基 campaign 编排器（T1-T4 + 7 点 rubric + 反假绿 SSOT）|
 | | `truth/per-domain-analysis` | 单域真相深勘（sub-agent 产物 · 7 点 rubric + reverse-water）|
 | | `truth/per-cluster-value-proposition` | 簇级三态价值承诺（🟢能建/🟡围栏/🔴勿建 + FE readiness）|
-| **review / closure(3)** | `code-review` | 评审制品 + verdict（单 reviewer）|
+| **review / closure(4)** | `code-review` | 评审制品 + verdict（单 reviewer）|
 | | `code-review-findings-ledger` | 跨 reviewer 合并 + verified-findings + 三类归属 + 修复方案 |
+| | `code-review-eval` | 跨 reviewer 审查质量评价（finding 事后判定 + 多维打分）|
 | | `closure` | 收口 + 价值/负债台账 + handoff |
 | **respond / 附加章节(2)** | `code-review-respond` | 实现者回应（append code-review §6）|
 | | `code-execution-log` | 执行日志回填（append action-plan §9 厚版）|
@@ -148,10 +149,11 @@ eval(想做什么) ─┐
 - **`truth/per-domain-analysis`**（站②）— 单域真相深勘（sub-agent 产物）：7 点 rubric + 假绿审计 + FE 可达性 + reverse-water。★ §9.1 逐能力 T 层热力图 · §9.2 reverse-water · §9.4 verdict（go/go-with-fence/blocked）。
 - **`truth/per-cluster-value-proposition`**（站③）— 簇级上卷成给前端的承诺：🟢能建/🟡围栏建/🔴勿建。★ §3/§4/§5 三态价值台账 · §6 GAP(P0-P2) · §7 对前端意义 + 利用法。
 
-### 2.7 review / closure（3）
+### 2.7 review / closure（4）
 
 - **`code-review`** — 评审 design/action-plan/code/docs/closure + verdict（单 reviewer）。★ §0 verdict + 等级 · §2 审查发现（R1..Rn）· §3 In-Scope 逐项对齐 · §4 防把 deferred 误判 blocker。状态：`reviewed|changes-requested|re-reviewed|closed`。
 - **`code-review-findings-ledger`** — 收齐 **≥2 份** 独立 reviewer 后，实现者平铺/合并去重/逐条对真实代码亲验，成单一权威台账 + 修复方案。★ §3 verified-findings 台账 · **三类归属问责轴**（`[true-bug]`/`[partial-delivery]`/`[true-deferred]` + 反规避诚实闸）· §5 初步修复方案。状态：`triaged|fixing|resolved|closed`。
+- **`code-review-eval`** — 评价一轮或多位 reviewer 的审查质量（不是再审制品）。★ §0 最佳 AGENT / 最高价值 finding · §1 Findings 事后判定台账 · §2 多维打分。`retired/code-review-eval.md` 保留旧「单 reviewer 风格画像」版。**何时不用**：审实现→`code-review`；合并多审→`code-review-findings-ledger`。
 - **`closure`** — 阶段/子阶段收口。先选档（子阶段 §0-5 / 阶段 final §0-7 / grand §0-9）。★ §5 诚实收口声明（5 态）· §8 价值/负债台账（5 级证据）。纪律：close-type 4 类 + 四元组证据（commit+query/test+run-time）。
 
 ### 2.8 respond / 附加章节（2）—— **不是独立文档，append 到宿主**。强制 banner：宿主/挂载位/append-only/作者·时机/回链 item-ID/多轮。
@@ -267,7 +269,7 @@ eval(想做什么) ─┐
 - **`qna`**（身份写死 GPT问Opus答）→ 拆为 **qna-singular / qna-progressive**（角色解耦 + truth-gate）。
 - **`design-neo` / `design-sketch`** → design 家族现仅保留 `design`。
 - **`respond-post-freeze` / `respond-verification`** → 退役（碰撞核实/冻结后补强按需并入 review/respond 流程）。
-- **`investigation` / `code-review-eval` / `code-megafile-header` / `_TEMPLATE-spike-finding` / `issue-closure-fax9-and-beyond` / `composition-factory.ts` / `wrangler-worker.toml`** → 专项/陈旧，被现 active 集覆盖。
+- **`investigation` / `code-megafile-header` / `_TEMPLATE-spike-finding` / `issue-closure-fax9-and-beyond` / `composition-factory.ts` / `wrangler-worker.toml`** → 专项/陈旧，被现 active 集覆盖。旧版 `retired/code-review-eval.md`（单 reviewer 风格画像）保留作对照；现行评价模板见 active `code-review-eval`。
 
 > 注：部分 active 模板的「何时不用」仍含指向 `charter` 的历史措辞（如 eval 家族）——读作"定阶段边界/冻结"语义，落点改为 planning 三态 + qna；待逐份模板下次保养时订正。
 
@@ -281,3 +283,4 @@ eval(想做什么) ─┐
 | v0.3-0.5 | 2026-06-11 | Opus 4.8 | 同步 action-plan v2 / 新增 review-findings-ledger + 三类归属问责轴 |
 | **v0.6** | **2026-06-24** | **Opus 4.8** | **完整重写以反映模板体系重构**：① charter 家族退役、`eval-planning→planning 簇(3)`、`qna→qna 簇(2)`；② 新增 `assessment 簇·design-prelude(2)` 与 `truth/ 子簇·truth-grounding(3)`、`report/ 专科(2)`、`eval-README`；③ design 家族收敛为 `design`、`review-findings-ledger→code-review-findings-ledger`、`respond-execution-log→code-execution-log`、respond-post-freeze/verification 退役；④ 新增 §4.2 真相 ID 命名空间（qna `T-O` ↔ planning §2 互锁）、§4.4 truth-grounding 判据、§4.6 qna 角色/模式；⑤ §1.2 主流水线据 grounding-truth 实践重写、§5 legacy→retired。active 23→26 |
 | **v0.7** | **2026-08-19** | **Grok 4.6** | 新增 `eval-attribution-and-fix-cycle`（OG-08 X/Y 事故闭环：取证·归因·path-cap 修复·append 执行）。决策树/主流水线补事故轨；eval 6→7；`code-execution-log` 宿主扩到本模板 §14；§4.1 增事故状态词。active 26→27 |
+| **v0.8** | **2026-08-19** | **Grok 4.6** | 恢复 `code-review-eval` 为 active（跨 reviewer 质量评价；旧风格画像留 `retired/`）。review/closure 3→4；active 27→28 |
