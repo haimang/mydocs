@@ -31,6 +31,7 @@
 ├─ 冻结 owner 决策(单轮一次性 / 多轮渐进) ─────▶ qna 簇(§2.3)
 ├─ 写"完工长什么样 + 净新契约 + 跨功能一致性" ─▶ design(§2.4)
 ├─ 排"怎么做/何序/怎么测/怎么收口" ───────────▶ action-plan(§2.4)
+├─ 把目标变成可执行事项/依赖指引/验收跟踪 ───────────▶ action-todo(§2.4)
 ├─ 评审 / 跨 reviewer 合并 / 回应 / 收口 ───────▶ review·closure·respond(§2.7/2.8)
 └─ API 合规 / owner-test 截图批次根因 / 项目 README ──▶ report/(§2.9)
 ```
@@ -50,7 +51,8 @@ eval(想做什么) ─┐
                        planning-final(站③·critique+全态真相台账+每AP锁4台账)
                           │  1:1 派生
                           ▼
-                       action-plan ×N ──▶ 执行(code-execution-log) ──▶
+                       action-plan ×N（如适用）──▶ action-todo（依赖引导执行）──▶
+                       执行(code-execution-log) ──▶
                        code-review → code-review-findings-ledger → code-review-respond ──▶
                        closure ──▶ eval-state-analysis(开下周期)
 ```
@@ -66,7 +68,7 @@ eval(想做什么) ─┐
   ```
 - **charter 已退役**：旧"重轨 charter / 轻轨 charter-lite"的「定边界 + 冻决策」角色，现由 **planning 三态（scope/phase/exit）+ qna 双门（决策冻结）** 共同承担（§5）。历史四轨设计见 `propositions/workflow-tracks.md`。
 
-### 1.3 家族索引（active 28）
+### 1.3 家族索引（active 29）
 
 | 家族 / 簇 | 模板 | 一句话角色 |
 |------|------|------------|
@@ -83,7 +85,8 @@ eval(想做什么) ─┐
 | **qna 簇(2)** | `qna-singular` | 单轮一次性决策册 + 冻结后 truth-gate 终态台账 |
 | | `qna-progressive` | 多轮渐进决策册（轮间评估 + 生成式 truth-gate 锁死三件）|
 | **design(1)** | `design` | 功能簇设计（净新契约 + 跨功能一致性 + tradeoff + 验收）|
-| **action-plan(1)** | `action-plan` | 执行序列（工作总表 + 内置锚区 + 测试台账 + 收口）|
+| **execution(2)** | `action-plan` | 执行序列（工作总表 + 内置锚区 + 测试台账 + 收口）|
+| | `action-todo` | 轻量执行清单（核心脊 + 可选插件 + 灵活 DAG + 验收/交接）|
 | **assessment 簇 · design-prelude(2)** | `assessment-index` | 阶段评估编排器（measure-first 冻分母 + 调查面地图）|
 | | `assessment-analysis` | 单调查面深评（借鉴矩阵 + 缺口台账 + 净新契约草案）|
 | **truth/ 子簇 · truth-grounding(3)** | `truth/assessment-index` | 真值奠基 campaign 编排器（T1-T4 + 7 点 rubric + 反假绿 SSOT）|
@@ -130,10 +133,11 @@ eval(想做什么) ─┐
 - **`qna-singular`** — 一批问题、逐题裁决、一次冻结（典型 pre-initial 定调门 / pre-charter 关 gate 门）。★ 逐 Q 字段骨架（影响范围/为什么/当前建议{ROLE_A}/Reasoning/{ROLE_B} 三槽/问题/业主回答）· §3 冻结后 Truth-Gate 终态台账。
 - **`qna-progressive`** — 多轮渐进梳理真相（典型 deep-dive）：问一批 → owner 直答 → 记录真相 → agent 中场评估 → 由真相驱动下一批。★★ **锁死三件 `[锁死]`**：① §1 每轮 Truth-Gate 台账（累积 T-O）· ② 轮间「中场评估」段 · ③ 下一轮每题标"由哪条 T-O 驱动"。
 
-### 2.4 design（1）+ action-plan（1）
+### 2.4 design（1）+ execution（2）
 
 - **`design`** — 功能簇设计：净新契约 + 跨功能一致性 + 深度 tradeoff + 验收。★ §3 架构稳定性/扩展策略 · §5/§6 In/Out + Tradeoff 价值判断 · §7 In-Scope 功能详列。**frozen 须 owner 裁决（指向 qna register），落 `docs/design/` 户口。**（注：refactor 版 design-neo/sketch 已退役，§5。）
 - **`action-plan`** — 落地终点：消费已 frozen 的 design/qna/planning，排"怎么做/何序/怎么测/怎么收口"。**不开 Q/A**（只消费冻结结论）。★ §3 业务工作总表（不可约三元组：`涉及文件 file:line | 收口目标 | 测试映射→§8`）· **§7 内置 Reference-Anchor 锚区**（含 §7.3 安全项威胁模型，不得留空）· **§8 测试台账**（类型/层/来源 🆕新增·♻️沿用·🔱fork/四元组 PASS）· §10 收口（DoD=测试台账全 PASS 映射）。状态：`+executing|executed`。
+- **`action-todo`** — 把目标变成可执行事项、可读依赖/DAG、验收证据和交接状态的轻量模板；每个 Item ID 必须有 checkbox，完成后回写 checkbox、执行状态、时间和证据；可承接 action-plan，也可直接用于小型任务。**核心脊必须 follow，RED-first、scope、reference、test、live/billing、execution、closure 等按触发条件作为插件启用；不规定 block 数量、phase 形态或 DAG 画法，不开新 Q/A，也不自发产生授权。** 何时不用：仅需设计/取舍→`design`；需要完整工作总表、reference-anchor 与测试台账→`action-plan`；阶段收口→`closure`。状态：`draft|ready|in_progress|blocked|partial|complete|superseded`。
 
 ### 2.5 assessment 簇 · design-prelude（2）—— **独立簇，非 eval 血缘**；进 planning 前的「前置研究评估」（关心"要建什么/能借什么/怎么落地"）。
 
@@ -207,7 +211,7 @@ eval(想做什么) ─┐
 
 ### 4.1 文档状态词汇
 - **核心四态（共用）**：`draft → reviewed → frozen → superseded`。
-- **家族扩展**：`action-plan` + `executing|executed`；`code-review/api-compliance/*-respond` 用 `reviewed|changes-requested|re-reviewed|closed`；`code-review-findings-ledger` 用 `triaged|fixing|resolved|closed`。
+- **家族扩展**：`action-plan` + `executing|executed`；`action-todo` 用 `ready|in_progress|blocked|partial|complete`（仍受 `draft|reviewed|frozen|superseded` 文档生命周期约束，`complete` 必须有证据）；`code-review/api-compliance/*-respond` 用 `reviewed|changes-requested|re-reviewed|closed`；`code-review-findings-ledger` 用 `triaged|fixing|resolved|closed`。
 - **eval 纯分析型**（general-purpose/gap-study/state-analysis/feasibility/retrospective）：`draft|reviewed|superseded`（快照不 freeze）；锚型（reference-anchor / planning-final）：`+frozen`。
 - **`eval-attribution-and-fix-cycle` 事故状态**（与核心四态并用，写在头部「事故状态」串）：`ANALYSIS_COMPLETE → SCOPE_FROZEN → ADVERSARIALLY_REVIEWED → AUTHORIZED_FOR_LOCAL → EXECUTED_THROUGH_PREFLIGHT → NEXT_LANE_READY_NOT_STARTED`。正式 lane 的 machine RED **不随**这些状态改写。`frozen` 在此只锁设计/allowlist 给执行者，**不是** owner 授权编码。
 - **truth/ 子簇**：per-domain `draft|cross-reviewed|attested|superseded`；index `active campaign|closed`；per-cluster `draft rollup|reviewed|frozen`。
@@ -284,3 +288,6 @@ eval(想做什么) ─┐
 | **v0.6** | **2026-06-24** | **Opus 4.8** | **完整重写以反映模板体系重构**：① charter 家族退役、`eval-planning→planning 簇(3)`、`qna→qna 簇(2)`；② 新增 `assessment 簇·design-prelude(2)` 与 `truth/ 子簇·truth-grounding(3)`、`report/ 专科(2)`、`eval-README`；③ design 家族收敛为 `design`、`review-findings-ledger→code-review-findings-ledger`、`respond-execution-log→code-execution-log`、respond-post-freeze/verification 退役；④ 新增 §4.2 真相 ID 命名空间（qna `T-O` ↔ planning §2 互锁）、§4.4 truth-grounding 判据、§4.6 qna 角色/模式；⑤ §1.2 主流水线据 grounding-truth 实践重写、§5 legacy→retired。active 23→26 |
 | **v0.7** | **2026-08-19** | **Grok 4.6** | 新增 `eval-attribution-and-fix-cycle`（OG-08 X/Y 事故闭环：取证·归因·path-cap 修复·append 执行）。决策树/主流水线补事故轨；eval 6→7；`code-execution-log` 宿主扩到本模板 §14；§4.1 增事故状态词。active 26→27 |
 | **v0.8** | **2026-08-19** | **Grok 4.6** | 恢复 `code-review-eval` 为 active（跨 reviewer 质量评价；旧风格画像留 `retired/`）。review/closure 3→4；active 27→28 |
+| **v0.9** | **2026-09-02** | **Codex** | 新增 `action-todo`：承接 frozen action-plan 的严格串行执行、phase gate、RED-first、first-red、local/live 分轴和证据回填；active 28→29 |
+| **v1.0** | **2026-09-02** | **Codex** | 根据 owner 反馈收敛 `action-todo`：核心脊 + 条件插件；DAG 形式、节点数量、phase 与执行顺序由 agent 自主选择；减少前序示例耦合；active 维持 29 |
+| **v1.1** | **2026-09-02** | **Codex** | 将每个 Item ID 的 checkbox、完成后回写执行状态/UTC/证据提升为核心硬要求 |
