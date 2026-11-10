@@ -30,6 +30,7 @@
 ├─ 多章节子阶段·要派 ≥2 份 action-plan 的策划链 ─▶ planning 三态(§2.2)
 ├─ 把业主口述收成可检验模型、但还不冻结 ─────▶ mental-model(§2.10)
 ├─ 冻结 owner 决策(单轮一次性 / 多轮渐进) ─────▶ qna 簇(§2.3)
+├─ 把已冻结问答压成一份下游引用面 ───────────▶ qna-truth(§2.11)
 ├─ 写"完工长什么样 + 净新契约 + 跨功能一致性" ─▶ design(§2.4)
 ├─ 排"怎么做/何序/怎么测/怎么收口" ───────────▶ action-plan(§2.4)
 ├─ 把目标变成可执行事项/依赖指引/验收跟踪 ───────────▶ action-todo(§2.4)
@@ -60,6 +61,7 @@ eval(想做什么) ─┐
 
 - **轻量变体**：trivial 无契约 → `eval-general-purpose → action-plan`；决策少 → `qna-singular` 一次冻结即可，不必走三态。
 - **心智模型变体**：输入是业主口述、还不是决策 → `mental-model`；其中的法律岔口再进 `qna`。形成层不预写 `foundation/rules/mental_model.md` 的登记单元。
+- **引用面变体**：一份短问答自己就是引用面，不必再投影。两份以上要合册、问答长到无法点名、或 foundational 与 executional 必须分开留论证时 → `qna-truth`。它不新建 Truth-ID；与问答冲突时以问答为准。
 - **事故闭环变体**（owner-gate / 正式 lane first-red，对标 OG-08 X/Y 包）：
   ```text
   封存 RED ──▶ eval-attribution-and-fix-cycle
@@ -70,7 +72,7 @@ eval(想做什么) ─┐
   ```
 - **charter 已退役**：旧"重轨 charter / 轻轨 charter-lite"的「定边界 + 冻决策」角色，现由 **planning 三态（scope/phase/exit）+ qna 双门（决策冻结）** 共同承担（§5）。历史四轨设计见 `propositions/workflow-tracks.md`。
 
-### 1.3 家族索引（active 30）
+### 1.3 家族索引（active 31）
 
 | 家族 / 簇 | 模板 | 一句话角色 |
 |------|------|------------|
@@ -87,6 +89,7 @@ eval(想做什么) ─┐
 | **formation(1)** | `mental-model` | 业主口述 → 可检验心智模型（脊 + 插件；冻结零决策，岔口回 qna）|
 | **qna 簇(2)** | `qna-singular` | 单轮一次性决策册 + 冻结后 truth-gate 终态台账 |
 | | `qna-progressive` | 多轮渐进决策册（轮间评估 + 生成式 truth-gate 锁死三件）|
+| **消费入口(1)** | `qna-truth` | 已冻结问答的引用面（不新建 Truth-ID，不是第二真源，不是 grant） |
 | **design(1)** | `design` | 功能簇设计（净新契约 + 跨功能一致性 + tradeoff + 验收）|
 | **execution(2)** | `action-plan` | 执行序列（工作总表 + 内置锚区 + 测试台账 + 收口）|
 | | `action-todo` | 轻量执行清单（核心脊 + 可选插件 + 灵活 DAG + 验收/交接）|
@@ -178,6 +181,10 @@ eval(想做什么) ─┐
 
 - **`mental-model`** — 把业主口述收成可检验模型：保真登记、读法与原话分离、对账三态、待决出口、收口声明。★ 五条脊（语义不可删，标题与表格可换）· 九个插件按触发启用（心流 / 一句话模型 / 评价 / 应接应拒须改 / 禁止反例 / 核查义务 / 谱系 / 姊妹与阶段 / 执行者草稿）。成熟度 `讨论中|已成形|待问答|已转问答` 只描述这篇走到哪，不是业主同意。**何时不用**：要冻结决策 → `qna-singular` / `qna-progressive`；要写净新契约 → `design`；要排执行 → `action-plan`；全仓预期的唯一登记处是 `foundation/rules/mental_model.md`，须业主点名才吸收。
 
+### 2.11 消费入口（1）—— 已冻结问答的引用面
+
+- **`qna-truth`** — 把已经冻结的问答压成下游唯一引用面。★ 六条脊：身份（`FROZEN` 且 `NOT IMPLEMENTATION GRANT`）、权威八条、裁决块、总表、规范内核、收口。六个插件按触发启用（基线事实层 / 权威次序 / 上游关系 / 冻结审计注记 / 修正案 / 残项与不得重开）。条款密度只跟源头走：短句保持短段；已有 `①②③` 或 `01.1` 原样投影，不另编序号。**何时不用**：一份短问答自己就能被点名 → 不要再投影；还没冻结 → `qna-singular` / `qna-progressive`；口述还不是决策 → `mental-model`；要排执行 → `action-plan`。`.anote/` 里的 `qna-truth-and-precision` 是 action-plan 偏离审查，不是本模板。
+
 ---
 
 ## 3. 模块重组指南（跨模板组合）
@@ -221,12 +228,13 @@ eval(想做什么) ─┐
 - **家族扩展**：`action-plan` + `executing|executed`；`action-todo` 用 `ready|in_progress|blocked|partial|complete`（仍受 `draft|reviewed|frozen|superseded` 文档生命周期约束，`complete` 必须有证据）；`code-review/api-compliance/*-respond` 用 `reviewed|changes-requested|re-reviewed|closed`；`code-review-findings-ledger` 用 `triaged|fixing|resolved|closed`。
 - **eval 纯分析型**（general-purpose/gap-study/state-analysis/feasibility/retrospective）：`draft|reviewed|superseded`（快照不 freeze）；锚型（reference-anchor / planning-final）：`+frozen`。
 - **`mental-model`**：文档状态同样 `draft|reviewed|superseded`，**不在形成层 `frozen`**（冻结只发生在 qna）。头部成熟度 `讨论中|已成形|待问答|已转问答` 是进度轴，不是 owner 同意标记。
+- **`qna-truth`**：头部 `FROZEN` 表示所投影的真相已经冻结，必须同时写 `NOT IMPLEMENTATION GRANT`。这不是施工授权，也不在本文新冻 `T-O`。
 - **`eval-attribution-and-fix-cycle` 事故状态**（与核心四态并用，写在头部「事故状态」串）：`ANALYSIS_COMPLETE → SCOPE_FROZEN → ADVERSARIALLY_REVIEWED → AUTHORIZED_FOR_LOCAL → EXECUTED_THROUGH_PREFLIGHT → NEXT_LANE_READY_NOT_STARTED`。正式 lane 的 machine RED **不随**这些状态改写。`frozen` 在此只锁设计/allowlist 给执行者，**不是** owner 授权编码。
 - **truth/ 子簇**：per-domain `draft|cross-reviewed|attested|superseded`；index `active campaign|closed`；per-cluster `draft rollup|reviewed|frozen`。
 - **澄清**：`frozen`（文档定稿锁定）≠ planning/eval 的"冻结零决策"（指不替 owner 拍板）。
 
 ### 4.2 ★ 真相 ID 命名空间（qna ↔ planning 互锁，唯一真源）
-- **`T-O` owner-gated 真相**——由 **qna truth-gate 冻结**（qna-singular §3 / qna-progressive §1）；子类型 `foundational`（pre-initial-planning 位点）/ `execution`（pre-charter 位点）。**planning §2 真相台账 CITE 这些 T-O，不自冻。**
+- **`T-O` owner-gated 真相**——由 **qna truth-gate 冻结**（qna-singular §3 / qna-progressive §1）；子类型 `foundational`（pre-initial-planning 位点）/ `execution`（pre-charter 位点）。**planning §2 真相台账 CITE 这些 T-O，不自冻。** `qna-truth` 只投影这些已出生的 ID，供下游 CITE；与问答不一致时 fail-closed，以问答为 provenance，不自冻、不新建 ID。
 - **`T-R` reference-checked 真相**——来自 reference-anchor 回灌 + HEAD 实测；子类型含 `HEAD-实测`（planning-final §2.2 锁死 ≥1 条）。**不进 qna**（qna 只产 T-O）。
 - **`T-P` provisional 暂定前提**——planning-initial 态未冻结的 conjecture，待 proposed 用 T-R 证实/证伪。
 - **stage 轴（planning 簇）**：`initial|proposed|final` = 成熟度轴，独立于 status，= 文件名（planning-initial/proposed/final），勿塞进 status。
@@ -300,3 +308,4 @@ eval(想做什么) ─┐
 | **v1.0** | **2026-09-02** | **Codex** | 根据 owner 反馈收敛 `action-todo`：核心脊 + 条件插件；DAG 形式、节点数量、phase 与执行顺序由 agent 自主选择；减少前序示例耦合；active 维持 29 |
 | **v1.1** | **2026-09-02** | **Codex** | 将每个 Item ID 的 checkbox、完成后回写执行状态/UTC/证据提升为核心硬要求 |
 | **v1.2** | **2026-11-10** | **Grok** | 新增 `mental-model`（formation）：五条脊 + 九个条件插件；决策树与心智模型变体接入 qna 之前。形成层不冻结、不预写登记表。active 29→30 |
+| **v1.3** | **2026-11-10** | **Grok** | 新增 `qna-truth`（消费入口）：六条脊 + 六个条件插件。只投影已冻结问答，不新建 Truth-ID，不是第二真源，不是 grant。active 30→31 |
