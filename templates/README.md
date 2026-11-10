@@ -28,6 +28,7 @@
 ├─ 进 planning 前的「前置研究评估」(借鉴/缺口/契约草案) ▶ assessment 簇·design-prelude(§2.5)
 ├─ 摸清「已有系统真值层/哪些真能用/哪些假绿」 ─▶ truth/ 子簇·truth-grounding(§2.6)
 ├─ 多章节子阶段·要派 ≥2 份 action-plan 的策划链 ─▶ planning 三态(§2.2)
+├─ 把业主口述收成可检验模型、但还不冻结 ─────▶ mental-model(§2.10)
 ├─ 冻结 owner 决策(单轮一次性 / 多轮渐进) ─────▶ qna 簇(§2.3)
 ├─ 写"完工长什么样 + 净新契约 + 跨功能一致性" ─▶ design(§2.4)
 ├─ 排"怎么做/何序/怎么测/怎么收口" ───────────▶ action-plan(§2.4)
@@ -58,6 +59,7 @@ eval(想做什么) ─┐
 ```
 
 - **轻量变体**：trivial 无契约 → `eval-general-purpose → action-plan`；决策少 → `qna-singular` 一次冻结即可，不必走三态。
+- **心智模型变体**：输入是业主口述、还不是决策 → `mental-model`；其中的法律岔口再进 `qna`。形成层不预写 `foundation/rules/mental_model.md` 的登记单元。
 - **事故闭环变体**（owner-gate / 正式 lane first-red，对标 OG-08 X/Y 包）：
   ```text
   封存 RED ──▶ eval-attribution-and-fix-cycle
@@ -68,7 +70,7 @@ eval(想做什么) ─┐
   ```
 - **charter 已退役**：旧"重轨 charter / 轻轨 charter-lite"的「定边界 + 冻决策」角色，现由 **planning 三态（scope/phase/exit）+ qna 双门（决策冻结）** 共同承担（§5）。历史四轨设计见 `propositions/workflow-tracks.md`。
 
-### 1.3 家族索引（active 29）
+### 1.3 家族索引（active 30）
 
 | 家族 / 簇 | 模板 | 一句话角色 |
 |------|------|------------|
@@ -82,6 +84,7 @@ eval(想做什么) ─┐
 | **planning 簇(3)** | `planning-initial` | 站①：整合裁定原始 eval + 真相台账（foundational T-O / 暂定 T-P）|
 | | `planning-proposed` | 站②：Δ 重锚 + reference-checked 真相（T-R）+ 调整溯因 |
 | | `planning-final` | 站③：critique + 全态真相台账 + **每 AP 锁 4 台账** + 派生排序 |
+| **formation(1)** | `mental-model` | 业主口述 → 可检验心智模型（脊 + 插件；冻结零决策，岔口回 qna）|
 | **qna 簇(2)** | `qna-singular` | 单轮一次性决策册 + 冻结后 truth-gate 终态台账 |
 | | `qna-progressive` | 多轮渐进决策册（轮间评估 + 生成式 truth-gate 锁死三件）|
 | **design(1)** | `design` | 功能簇设计（净新契约 + 跨功能一致性 + tradeoff + 验收）|
@@ -171,6 +174,10 @@ eval(想做什么) ─┐
 - **`report/bug-analysis`** — owner-test 回来后、写 charter/action-plan **之前**的根因诊断（截图批次，**无**封存 lane root）。★ §6 架构判定(hot-fix vs 长治) · §7 完整 DAG 修复结构 · §8 测试体系归责 · §10 修复后测试方案 · 附录 Z 长期原则。**何时不用**：已有正式 journey / owner-gate 封存 RED → `eval-attribution-and-fix-cycle`。
 - **`eval-README`** — 给一个仓库产出/重写**对外**顶层 `README.md`（onboarding/巡检/交接）；借 eval 对账诚实但产出是交付物。档位 A/B/C（整库 / 子项目 / 单目录极简）。
 
+### 2.10 formation（1）—— 业主心智的形成层
+
+- **`mental-model`** — 把业主口述收成可检验模型：保真登记、读法与原话分离、对账三态、待决出口、收口声明。★ 五条脊（语义不可删，标题与表格可换）· 九个插件按触发启用（心流 / 一句话模型 / 评价 / 应接应拒须改 / 禁止反例 / 核查义务 / 谱系 / 姊妹与阶段 / 执行者草稿）。成熟度 `讨论中|已成形|待问答|已转问答` 只描述这篇走到哪，不是业主同意。**何时不用**：要冻结决策 → `qna-singular` / `qna-progressive`；要写净新契约 → `design`；要排执行 → `action-plan`；全仓预期的唯一登记处是 `foundation/rules/mental_model.md`，须业主点名才吸收。
+
 ---
 
 ## 3. 模块重组指南（跨模板组合）
@@ -213,6 +220,7 @@ eval(想做什么) ─┐
 - **核心四态（共用）**：`draft → reviewed → frozen → superseded`。
 - **家族扩展**：`action-plan` + `executing|executed`；`action-todo` 用 `ready|in_progress|blocked|partial|complete`（仍受 `draft|reviewed|frozen|superseded` 文档生命周期约束，`complete` 必须有证据）；`code-review/api-compliance/*-respond` 用 `reviewed|changes-requested|re-reviewed|closed`；`code-review-findings-ledger` 用 `triaged|fixing|resolved|closed`。
 - **eval 纯分析型**（general-purpose/gap-study/state-analysis/feasibility/retrospective）：`draft|reviewed|superseded`（快照不 freeze）；锚型（reference-anchor / planning-final）：`+frozen`。
+- **`mental-model`**：文档状态同样 `draft|reviewed|superseded`，**不在形成层 `frozen`**（冻结只发生在 qna）。头部成熟度 `讨论中|已成形|待问答|已转问答` 是进度轴，不是 owner 同意标记。
 - **`eval-attribution-and-fix-cycle` 事故状态**（与核心四态并用，写在头部「事故状态」串）：`ANALYSIS_COMPLETE → SCOPE_FROZEN → ADVERSARIALLY_REVIEWED → AUTHORIZED_FOR_LOCAL → EXECUTED_THROUGH_PREFLIGHT → NEXT_LANE_READY_NOT_STARTED`。正式 lane 的 machine RED **不随**这些状态改写。`frozen` 在此只锁设计/allowlist 给执行者，**不是** owner 授权编码。
 - **truth/ 子簇**：per-domain `draft|cross-reviewed|attested|superseded`；index `active campaign|closed`；per-cluster `draft rollup|reviewed|frozen`。
 - **澄清**：`frozen`（文档定稿锁定）≠ planning/eval 的"冻结零决策"（指不替 owner 拍板）。
@@ -291,3 +299,4 @@ eval(想做什么) ─┐
 | **v0.9** | **2026-09-02** | **Codex** | 新增 `action-todo`：承接 frozen action-plan 的严格串行执行、phase gate、RED-first、first-red、local/live 分轴和证据回填；active 28→29 |
 | **v1.0** | **2026-09-02** | **Codex** | 根据 owner 反馈收敛 `action-todo`：核心脊 + 条件插件；DAG 形式、节点数量、phase 与执行顺序由 agent 自主选择；减少前序示例耦合；active 维持 29 |
 | **v1.1** | **2026-09-02** | **Codex** | 将每个 Item ID 的 checkbox、完成后回写执行状态/UTC/证据提升为核心硬要求 |
+| **v1.2** | **2026-11-10** | **Grok** | 新增 `mental-model`（formation）：五条脊 + 九个条件插件；决策树与心智模型变体接入 qna 之前。形成层不冻结、不预写登记表。active 29→30 |
